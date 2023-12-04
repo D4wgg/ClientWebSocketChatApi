@@ -1,0 +1,7 @@
+server:
+  port: 8081
+
+websocket-server-chat:
+  url: ${WEBSOCKET_SERVER_CHAT_URL:ws://localhost:8080/register}
+  send: ${WEBSOCKET_SERVER_CHAT_SEND:/app/chat}
+  subscribe: ${WEBSOCKET_SERVER_CHAT_URL_SUBSCRIBE:/topic/messages}

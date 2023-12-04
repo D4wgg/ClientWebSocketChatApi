@@ -1,0 +1,11 @@
+version: '3'
+services:
+
+  chat:
+    image: chat:latest
+    ports:
+      - '8080:8080'
+    environment:
+      WEBSOCKET_SERVER_CHAT_URL: 'ws://localhost:8080/register'
+      WEBSOCKET_SERVER_CHAT_SEND: '/app/chat'
+      WEBSOCKET_SERVER_CHAT_URL_SUBSCRIBE: '/topic/messages'
