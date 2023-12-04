@@ -1,11 +1,6 @@
 package ru.stupor.clientwebsocketapi.websocket.model;
 
-import lombok.Data;
+import lombok.Builder;
 
-@Data
-public class Message {
-
-    private String from;
-    private String text;
-
-}
+@Builder
+public record Message(String from, String text) { }

@@ -40,7 +40,7 @@ public class WebSocketClientHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         Message msg = (Message) payload;
-        log.info("Received : " + msg.getText() + " from : " + msg.getFrom());
+        System.out.println(String.format("%s: %s", msg.from(), msg.text()));
     }
 
 }

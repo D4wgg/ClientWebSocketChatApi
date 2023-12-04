@@ -20,6 +20,8 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class WebSocketChatClientRunner implements CommandLineRunner {
 
+    private static final String EXIT_COMMAND = "/exit";
+
     private final WebSocketClientHandler webSocketClientHandler;
 
     @Value("${websocket-server-chat.url}")
@@ -37,14 +39,31 @@ public class WebSocketChatClientRunner implements CommandLineRunner {
         StompSession session = stompClient.connectAsync(websocketServerUrl, webSocketClientHandler).get();
 
         var scanner = new Scanner(System.in);
+
+        System.out.print("Input your name: ");
+        var senderName = scanner.nextLine();
+
+        while (senderName.isBlank()) {
+            System.out.println("The name can't be blank!");
+            System.out.print("Input your name: ");
+            senderName = scanner.nextLine();
+        }
+
+        System.out.println("Your name is " + senderName);
+        System.out.println(String.format("Type '%s' to leave chat", EXIT_COMMAND));
+
+        System.out.println("Chat: ");
         var input = scanner.nextLine();
 
-        while(!input.equals("exit")) {
-            var message = new Message();
-            message.setFrom("Ivan");
-            message.setText(input);
+        while(!input.equals(EXIT_COMMAND)) {
+            var message = Message.builder()
+                    .from(senderName)
+                    .text(input)
+                    .build();
             session.send(websocketServerChatSend, message);
             input = scanner.nextLine();
         }
+
+        System.exit(0);
     }
 }
